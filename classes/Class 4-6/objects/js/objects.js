@@ -1,8 +1,5 @@
 // A user who had reserved a Zipcar arrives to find it has not been returned yet, and customer service transfers her reservation to an available car.
 
-
-
-
 //constructor
 var Zipcar = function(status) {
 	this.status = status;
@@ -35,9 +32,6 @@ var zipcar1 = new Zipcar("not available");
 var zipcar2 = new Zipcar("availabe");
 
 var zipcars = [zipcar1, zipcar2];
-
-
-
 
 var reservation = {
 	zipcar: zipcars[0],

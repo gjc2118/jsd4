@@ -1,0 +1,51 @@
+<body>
+
+<h1> Lorem </h1>
+
+<ul>
+	<li> 
+		<p> Fish tacos </p>
+		<img width="100" src="http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2010/4/26/0/FNM_060110-Weeknight-001_s4x3.jpg.rend.sni12col.landscape.jpeg"> 
+	</li>
+</ul>
+
+<div>
+</div>
+
+</body>
+
+<script>
+	var div = document.querySelector("div");
+	div.innerHTML = "Hello!!";
+
+	var ul = document.querySelector("ul");
+
+	function createMenuItem(){
+		// step 1 create element
+		var li = document.createElement("li");
+		var p = document.createElement("p");
+		var img = document.createElement("img");
+
+		// step 2 content and attributes
+		p.innerHTML = "Fish tacos";
+		img.src = "http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2010/4/26/0/FNM_060110-Weeknight-001_s4x3.jpg.rend.sni12col.landscape.jpeg";
+
+		// step 3 append element
+		li.appendChild(img);
+		li.appendChild(p);
+		ul.appendChild(li);
+	}
+
+	function createMenuItemTemplate(){
+		var li = document.createElement("li");
+		var template =  "<li>" +
+		"<p> Fish tacos </p>" +
+		"<img width='100' src='http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2010/4/26/0/FNM_060110-Weeknight-001_s4x3.jpg.rend.sni12col.landscape.jpeg'>" + 
+		"</li>";
+		li.innerHTML = template;
+		ul.appendChild(li);
+
+	}
+
+
+</script>

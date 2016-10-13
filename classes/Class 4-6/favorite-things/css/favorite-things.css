@@ -1,0 +1,20 @@
+body {
+	font-family: "Futura";
+	background-color: #FFFFFF;
+	font-size: 18px;
+	margin: 50px;
+}
+main {
+	margin: 10px;
+}
+.things {
+	margin: 20px 0;
+	list-style-type: decimal;
+    list-style-position: inside;
+}
+form input {
+	display: block;
+	margin-top: 10px;
+	font-size: 18px;
+	padding: 4px 8px;
+}

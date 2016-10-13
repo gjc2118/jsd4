@@ -32,7 +32,7 @@ item in the 'links' array.
 
 links = [];
 flickerObj.items.forEach(function(item) {
-	links.push(item);
+	links.push(item.link);
 })
 
 /*

@@ -1,0 +1,11 @@
+body {
+	background-color: lightblue;
+}
+
+.issues {
+	color: red;
+}
+
+.important {
+	font-weight: bold;
+}
