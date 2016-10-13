@@ -35,6 +35,9 @@
 
 <script>
     document.body.style.backgroundImage = 'url("http://thecatapi.com/api/images/get?format=src&type=gif")';
+    setTimeout(function(){
+   window.location.reload(1);
+}, 5000);
     function refresh(){
          document.body.style.backgroundImage = 'url("http://thecatapi.com/api/images/get?format=src&type=gif")';
     }
