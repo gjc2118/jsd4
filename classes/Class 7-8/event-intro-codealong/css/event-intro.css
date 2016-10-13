@@ -1,0 +1,38 @@
+* {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	user-select: none;
+	cursor: default;
+}
+body {
+	color: #A42A2A;
+	background: #FFD3D3;
+	font-family: "BritannicBold", Arial, sans-serif;
+	font-size: 20px;
+}
+main {
+	width: 250px;
+	margin: 35px auto;
+	padding: 25px 0;
+	border-top: 1px solid #C84D4D;
+	border-bottom: 1px solid #C84D4D;
+	text-align: center;
+}
+p {
+	width: 60px;
+	height: 60px;
+	margin: 25px auto 10px;
+	border: 2px solid #C84D4D;
+	border-radius: 50%;
+	background: #FFAFAF;
+	line-height: 57px;
+	cursor: pointer;
+}
+
+.the-console-log {
+	font-family: monospace;
+	letter-spacing: -2px;
+	width: 250px;
+	margin: 35px auto;
+
+}
