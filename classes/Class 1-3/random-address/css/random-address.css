@@ -34,7 +34,7 @@ main header button {
 	cursor: pointer;
 }
 main header button:hover {
-	background: #77BCC9;
+	background: blue;
 }
 
 .addresses li {
