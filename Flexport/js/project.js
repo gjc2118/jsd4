@@ -7,10 +7,10 @@ var presentation = ["Here's an idea...",
 var ideas = [
 {
 	asa: "inventory manager",
-	iwantto: "View inventory in each of my warehouses and be notified of any shortfalls",
+	iwantto: "view inventory in each of my warehouses and be notified of any shortfalls",
 	sothat: "I can prevent any supply constraints",
-	build: "Integrate with business inventory to feed notification system based on inventory level thresholds and smart auto-fullfilment service to pro-actively ship orders",
-	objective: "Delight customers by giving them on less thing to worry about, increase revenue by making the product more sticky",
+	build: "Integrate with business inventory to feed notification system based on inventory level thresholds and smart auto-fulfillment service to pro-actively ship orders",
+	objective: "Delight customers by giving them one less thing to worry about, increase revenue by making the product more sticky",
 	effort: "High"
 },
 {
@@ -24,8 +24,8 @@ var ideas = [
 {
 	asa: "business risk officer",
 	iwantto: "insure my shipments",
-	sothat: "I can hedge the risk of not fullfilling my shipments",
-	build: "Sell insurance by leveraging your analyticsto to cut risk for businesses (e.g. weather or freight canceling)",
+	sothat: "I can hedge the risk of not fulfilling my shipments",
+	build: "Sell insurance by leveraging your analytics to cut risk for businesses (e.g. weather or freight canceling)",
 	objective: "Increase revenue by selling a new product, delight customers",
 	effort: "High"
 },
@@ -33,14 +33,14 @@ var ideas = [
 	asa: "vendor manager",
 	iwantto: "try Flexport for free",
 	sothat: "I don't have an excuse not to try Flexport and will inevitably love it",
-	build: "Reduce barriers to acquisition by explicitely quoting how long the onboarding process takes and giving discount on first order",
-	objective: "Increase revenue by boosting acquisition rate",
+	build: "Reduce barriers to customer acquisition by explicitly quoting how long the onboarding process takes and giving a discount on first order",
+	objective: "Increase revenue by boosting customer acquisition rate",
 	effort: "High"
 },
 {
 	asa: "freight company",
-	iwantto: "know the future demand and popular routes",
-	sothat: "I can optimize which routes I serve to better serve and increase revenue",
+	iwantto: "understand future demand and popular routes",
+	sothat: "I can optimize which routes I serve in order to better serve and increase revenue",
 	build: "Advise the freight services by showing them predicted demand and use pricing to manage the supply of ships",
 	objective: "Increase revenue by providing services to players in both supply and demand",
 	effort: "High"
@@ -49,7 +49,7 @@ var ideas = [
 	asa: "CFO",
 	iwantto: "have a financing option for my shipments",
 	sothat: "I can pay back Flexport when convenient (e.g. when shipped product is sold)",
-	build: "Offer short term financing or installment payment plan, potentially using the shipment as collateral",
+	build: "Offer short term financing or installment payment plans, potentially using the shipment as collateral",
 	objective: "Delight customers by giving flexibility back to the businesses",
 	effort: "High"
 },
@@ -57,7 +57,7 @@ var ideas = [
 	asa: "Flexport customer service representative",
 	iwantto: "leverage AI to respond to customer requests",
 	sothat: "I only have to intervene when there are complex issues",
-	build: "Build chatbots to facilitate servicing requests and inquiries and build an improved, scalable customer service",
+	build: "Build chatbots to facilitate servicing requests and inquiries and build an improved, scalable customer service department",
 	objective: "Reduce costs by automating support services",
 	effort: "High"
 },
@@ -65,14 +65,14 @@ var ideas = [
 	asa: "business operations manager",
 	iwantto: "pay the lowest price for the shipment of my goods without sacrificing quality service",
 	sothat: "I can turn a profit more quickly",
-	build: "Push promotions to users by leveraging analytics and guiding customers into making the logistics decision that would benefit them and Flexport",
-	objective: "Reduce costs via economies of scale, increase revenue by further undercuting competition",
+	build: "Push promotions to users by leveraging analytics and guiding customers into making the logistics decisions that would benefit them and Flexport",
+	objective: "Reduce costs via economies of scale, increase revenue by further undercutting competition",
 	effort: "High"
 },
 {
 	asa: "business executive",
-	iwantto: "leverage AI to respond to customer requests",
-	sothat: "I only have to intervene when there are complex issues",
+	iwantto: "view the carbon footprint of each shipping option",
+	sothat: "make environmentally conscious decisions about how I ship my goods",
 	build: "Show in the software the carbon footprint of each shipping option, track how much customers are saving over time, give awards for environmentally conscious businesses",
 	objective: "Increase impact by helping businesses cut their carbon footprint and reduce their environmental impact",
 	effort: "High"
@@ -80,7 +80,7 @@ var ideas = [
 {
 	asa: "government representative",
 	iwantto: "tap into Flexport's data and expertise on trade",
-	sothat: "I can make informed decisions on policies that can impact US and global economy",
+	sothat: "I can make informed decisions on policies that can impact US and global economies",
 	build: "Thought leadership in the forms of white papers and reports, as well as an API to share knowledge",
 	objective: "Increase impact by helping guide national and internal trade policy to improve global development",
 	effort: "High"
