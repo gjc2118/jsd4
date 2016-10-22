@@ -122,8 +122,8 @@ function generate(){
 		swal({
     		title: "These are just some ideas!",
     		type: "success",
-    		text: " Want more? Further details? A mockup? Prioritization? Help building it? Reach out on to linkedin or email gjc2118 at gmail dot com",
-    	confirmButtonText: "Cool",
+    		text: "If only Product Management was this easy! Reach out on to linkedin or email gjc2118 at gmail dot com for more",
+    	confirmButtonText: "Thanks",
     	closeOnConfirm: false });
     	return;
 	}
