@@ -118,6 +118,17 @@ var bindex = 0;
 button.addEventListener("click",generate);
 
 function generate(){
+	if (button.innerHTML == "Thank you for your interest in Flexport Geoff!"){
+		swal({
+    		title: "These are just some ideas!",
+    		type: "success",
+    		text: " Want more? Further details? A mockup? Prioritization? Help building it? Reach out on to linkedin or email gjc2118 at gmail dot com",
+    	confirmButtonText: "Cool",
+    	closeOnConfirm: false });
+    	return;
+	}
+		
+
 	h2.innerHTML = presentation[pindex];
 	button.innerHTML = button_label[bindex];
 	asa.innerHTML = ideas[iindex].asa + ",";
@@ -140,12 +151,6 @@ function generate(){
 	}
 	if (ideas.length == iindex+1){
 		button.innerHTML = "Thank you for your interest in Flexport Geoff!"
-		swal({
-    		title: "These are just some ideas!",
-    		type: "success",
-    		text: " Want more? Further details? A mockup? Prioritization? Help building it? Reach out on linkedin or email gjc2118 at gmail dot com",
-    confirmButtonText: "Cool",
-    closeOnConfirm: false });
 		iindex = 0;
 	}
 	else {
