@@ -9,8 +9,7 @@ var details = document.querySelector("div.details");
 var results = document.querySelector("ul.results");
 
 function submit(){
-	event.preventDefault();
-	var query = "http://www.omdbapi.com/?s=" + title.value;
+	var query = "https://www.omdbapi.com/?s=" + title.value;
 	$.getJSON(query, movieShow);
 }
 
