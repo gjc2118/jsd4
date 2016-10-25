@@ -39,7 +39,7 @@ function movieShow(json){
 }
 
 function getDetails(id){
-	var query = "http://www.omdbapi.com/?i=" + id + "&plot=short";
+	var query = "https://www.omdbapi.com/?i=" + id + "&plot=short";
 	$.getJSON(query, detailsShow);
 }
 
