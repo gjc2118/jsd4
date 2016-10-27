@@ -14,7 +14,6 @@ function submit(){
 	$.getJSON(query, movieShow);
 }
 
-
 function movieShow(json){
 	results.innerHTML = "";
 	getDetails(json.Search.shift().imdbID);
@@ -68,7 +67,6 @@ function detailsShow(movie){
 	a.class = "imdb-link";
 	a.href = "http://www.imdb.com/title/"+movie.imdbID;
 
-
  	details.appendChild(div1);
  	div1.appendChild(img);
  	details.appendChild(div2);
@@ -82,5 +80,4 @@ function detailsShow(movie){
 
 results.addEventListener("click", function(e) {
 	getDetails(e.target.id)
-
 });

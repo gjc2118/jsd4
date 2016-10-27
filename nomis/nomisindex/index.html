@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+
+<body>
+<link rel="stylesheet" href="css/sky-forms.css">
+<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+<form action="" class="sky-form">
+
+	<header>Portfolio Simulator for Retail Savings Portfolio</header>
+
+	<fieldset>
+		<section class="col col-3">
+			<label class="h1"><strong>Scenario details</strong></label>
+            <label class="label">Fed Funds Rate</label>
+            <label class="toggle">
+                <input type="radio" name="radio-toggle1" id="ffno"/><i></i>No change</label>
+            <label class="toggle">
+                <input type="radio" name="radio-toggle1" id="ff25" checked=""/><i></i>+25bps</label>
+            <label class="toggle">
+                <input type="radio" name="radio-toggle1" id="ff50" /><i></i>+50bps</label>
+        </section>
+        <div class="col col-1"></div>
+        <section class="col col-3">
+        	<label class="h1"><strong> &nbsp</strong></label>
+	        <label class="label">Peer Competitiveness
+	        <label class="toggle">
+	            <input type="radio" name="radio-toggle2" checked=""/><i></i>Benign</label>
+	        <label class="toggle">
+	            <input type="radio" name="radio-toggle2" /><i></i>Normal</label>
+	        <label class="toggle">
+	            <input type="radio" name="radio-toggle2" /><i></i>Aggressive</label>
+        </section>
+        <div class="col col-1"></div>
+        <section class="col col-3">
+        	<label class="h1"><strong> &nbsp</strong></label>
+            <label class="label">Number of months forecast</label>
+            <label class="toggle">
+                <input type="radio" name="radio-toggle3" id="f1"/><i></i>1</label>
+            <label class="toggle">
+                <input type="radio" name="radio-toggle3" id="f3" /><i></i>3</label>
+            <label class="toggle">
+                <input type="radio" name="radio-toggle3" checked="" id="f6"/><i></i>6</label>
+        </section>
+    </fieldset>	
+
+
+	<fieldset>
+		<section class="col col-4">
+		<label class="h1"><strong>Portfolio Working Assumption</strong></label>
+		<div class="row">
+			<section class="col col-6">
+			<label class="label">Estimated Porfolio Size:</label>
+			</section>
+			<section class="col col-6">
+				<label class="input">
+					<input type="text" name="size" id="size" placeholder="Porfolio size ($)">
+				</label>
+			</section>
+		</div>
+			<div class="row">
+			<section class="col col-6">
+			<label class="label"">Estimated Net Balance Change:</label>
+			</section>
+			<section class="col col-6">
+				<label class="input">
+					<input type="text" id = "bal_change" name="bal_change" placeholder="Balance change ($)">
+				</label>
+			</section>
+		</div>
+			<div class="row">
+			<section class="col col-6">
+			<label class="label">Estimated Avg Interest Rate (%):</label>
+			</section>
+			<section class="col col-6">
+				<label class="input">
+					<input type="text" name="rate" id="rate" placeholder="Rate (%)">
+				</label>
+			</section>
+		</div>
+		<div class="row">
+			<section class="col col-4">
+				<button class="button" id="lead">&nbsp&nbspLead&nbsp&nbsp&nbsp</button>
+			</section>
+			<section class="col col-4">
+				<button class="button" id="lag">&nbsp&nbsp&nbspLag&nbsp&nbsp&nbsp</button>
+			</section>
+			<section class="col col-4">
+				<button class="button" id="maintain">Maintain</button>
+			</section>
+		</div>		
+		</section>
+		<section class="col col-1"></section>
+		<section class="col col-7">
+		<div class="row">
+			<label class="h1"><strong>Simulation Results</strong></label>
+			<section class="col col-6">
+			<label class="label">Change in Portfolio Balance: </label>
+			</section>
+			<section class="col col-6">
+			<label class="h2" id="result_bal_change"></label>
+			</section>
+		</div>
+		<div class="row">&nbsp</div>
+		<div class="row">
+			<section class="col col-4">
+			<label class="label">Change in Net Interest Income: </label>
+			<label class="h3" id="result_nii_change">-$xx M</label>
+			</section>
+			<section class="col col-4">
+			<label class="label" id="result_ie_change">Change in Interest Expense: </label>
+			<label class="h3">xx bps</label>
+			</section>
+			<section class="col col-4">
+			<label class="label">New Net Interest Margin: </label>
+			<label class="h3" id="result_nim_change">xx %</label>
+			</section>
+		</div>
+
+		</section>
+	</fieldset>
+</form>
+
+</body>
+</html>
+
+<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="js/sweetalert.min.js"></script>
+<script src="js/project.js" type="text/javascript"></script>
+<!--[if lt IE 9]>
+	<link rel="stylesheet" href="css/sky-forms-ie8.css">
+<![endif]-->
