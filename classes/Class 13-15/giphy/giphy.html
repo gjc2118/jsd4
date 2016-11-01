@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Giphy API</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/giphy.css">
+</head>
+<body>
+
+<h1>Giphy API</h1>
+
+
+<h2>Total Result count: 2</h2>
+
+<section class="gifs"></section>
+
+
+<script id="gif-template" type="text/x-handlebars-template">
+
+	{{#each data}}
+		<div class="gif" id="{{id}}">
+
+			<h2>{{id}}</h2>
+
+			<img src="{{images.original.url}}">
+
+			<p><a href="{{url}}">{{url}}</a></p>
+
+			<p>Rating: <span>{{rating}}</span></p>
+		</div>
+	{{/each}}
+
+</script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
+<script src="js/giphy.js"></script>
+</body>
+</html>
+
