@@ -76,7 +76,7 @@ function getNYTimes(search){
 //Get data from NPR
 function getNPR(search){
   span.innerHTML="NPR";
-  var url2 = "http://api.npr.org/query?apiKey=";
+  var url2 = "https://api.npr.org/query?apiKey=";
   url2 += "MDI3ODM1MzE3MDE0Nzc5Nzc4MzNiOWZiNw000";
   url2 += "&dateType=story&sort=dateDesc&output=JSON&numResults=20";
   if (search){
