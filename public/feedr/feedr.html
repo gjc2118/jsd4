@@ -19,74 +19,52 @@
         <ul>
           <li><a href="#">News Source: <span>Source Name</span></a>
             <ul>
-                <li><a href="#">Source 1</a></li>
-                <li><a href="#">Source 2</a></li>
-                <li><a href="#">Source 3</a></li>
+                <li><a href="#" id="NYTimes">NYTimes</a></li>
+                <li><a href="#" id="NPR">NPR</a></li>
             </ul>
           </li>
         </ul>
         <section id="search">
           <input type="text" name="name" value="">
-          <a href="#"><img src="images/search.png" alt="" /></a>
+          <a href="#"><img src="images/search.png" alt="" id="searchButton"/></a>
         </section>
       </nav>
       <div class="clearfix"></div>
     </section>
   </header>
+
   <div id="popUp" class="loader">
     <a href="#" class="closePopUp">X</a>
     <div class="container">
-      <h1>Article title here</h1>
-      <p>
-        Article description/content here.
-      </p>
+      <h1></h1>
+      <p></p>
       <a href="#" class="popUpAction" target="_blank">Read more from source</a>
     </div>
   </div>
   <section id="main" class="container">
+  </section>    
+
+
+  <script id="news-template" type="text/x-handlebars-template">
+    {{#each this}}
     <article class="article">
-      <section class="featuredImage">
-        <img src="images/article_placeholder_1.jpg" alt="" />
-      </section>
-      <section class="articleContent">
-          <a href="#"><h3>Test article title</h3></a>
-          <h6>Lifestyle</h6>
-      </section>
-      <section class="impressions">
-        526
-      </section>
-      <div class="clearfix"></div>
-    </article>
-  </section>
-
-
-         <!-- {{if multimedia.length > 0}}
-           <img src="{{multimedia[0].url}}" alt="" />  
-          {{/if}}
- -->
-
-    <script id="news-template-nytimes" type="text/x-handlebars-template">
-        {{#each docs}}
-        <article class="article">
-         <section class="featuredImage">
-        <img src="images/article_placeholder_1.jpg" alt="" />
-      </section>
-      <section class="articleContent">
-          <a href="#"><h3>{{headline.main}}</h3></a>
-          <h6>{{section_name}}, source: {{source}}</h6>
-      </section>
-      <section class="impressions">
-        526
-      </section>
-      <input type="hidden" value='{{headline.main}}' id="headline">
-      <input type="hidden" value='{{web_url}}' id="link">
-      <input type="hidden" value='{{snippet}}' id="snippet">
-      <div class="clearfix"></div>
-    </article>
-        {{/each}}
-      </script>
-
-
+     <section class="featuredImage">
+       <img src="{{image}}" alt="" />  
+     </section>
+     <section class="articleContent">
+      <a href="#"><h3>{{title}}</h3></a>
+      <h6>Source: {{source}}, Section: {{section}}, Date: {{date}}</h6>
+    </section>
+    <section class="impressions">
+    </section>
+    <input type="hidden" value='{{title}}' id="title">
+    <input type="hidden" value='{{link}}' id="link">
+    <input type="hidden" value='{{description}}' id="description">
+    <div class="clearfix"></div>
+  </article>
+  {{/each}}
+</script>
+  <script src="http://www.datejs.com/build/date.js" type="text/javascript"></script>
   <script src="js/handlebars-v4.0.5.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="js/feedr.js"></script>
