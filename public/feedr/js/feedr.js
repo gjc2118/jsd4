@@ -1,10 +1,9 @@
-//Javascript file powers single page news feed application
+// Javascript file powers single page news feed application
 // 20161031 Geoffrey Charles
-
-// Next steps 1) Another source 2) Infinite scrolling
+// Overview: See your NYTimes and NPR news in a single place and search for anything
+// Instructions: http://jsd4.herokuapp.com/homework/07-feedr
 // NPR Source: http://www.npr.org/api/queryGenerator.php?txtTitle=gello&txtQuery=
 // NYTIMES Source: https://developer.nytimes.com/article_search_v2.json#/Console/GET/articlesearch.json
-// Instructions http://jsd4.herokuapp.com/homework/07-feedr
 
 var newsTemplate = document.querySelector("#news-template");
 var main = document.querySelector("#main");
@@ -79,9 +78,6 @@ function getNYTimes(search){
     throw err;
   });
 }
-
-// to get more data use &startNum=21
-//http://api.npr.org/query?startNum=21&dateType=story&numResults=20&apiKey=MDI3ODM1MzE3MDE0Nzc5Nzc4MzNiOWZiNw000
 
 //Get data from NPR
 function getNPR(search){
@@ -204,6 +200,7 @@ function createListeners(){
       articles[i].addEventListener('click',generatePopup,false);
   }
 }
+
 //Generate popup with information contained in the article (using hidden fields)
 function generatePopup(e){
   popUp.className = ""; 
@@ -211,6 +208,7 @@ function generatePopup(e){
   popUp.querySelector("p").innerHTML = this.querySelector("#description").value;
   popUp.querySelector("a.popUpAction").href = this.querySelector("#link").value;
 }
+
 //Close popup when x is clicked
 close.addEventListener("click",function(){
   popUp.className = "loader hidden";
@@ -259,7 +257,6 @@ function searchArticles(){
   search.querySelector("input").value = '';
 }
 
-//NEED: this to work in search
 $(window).scroll(function() {
    if($(window).scrollTop() + $(window).height() > $(document).height() - 100 && loading == false) {
        // alert("near bottom!");

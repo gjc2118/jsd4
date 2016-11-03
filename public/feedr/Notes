@@ -1,0 +1,17 @@
+Demo (2 minutes) + design decisions
+1) Home page, sorted by time, NYTimes and NPR MERGED. Decided to remove the "hits" number. If no picture: blame the source
+2) Click for more details, click for source
+3) Click specific source 
+4) Search (decided to use the enter) - search does an API call (does not filter existing set) - Pro: more results, con: everything leads back to Trump...
+5) Pagination / infinite scroll (note: does not work for NYTimes Popular feed)
+
+2 techical hurdles
+1) Callbacks - didn't have time so used timeouts
+2) Sorting algorithm
+
+2 things you learned:
+1) Javascript is synchronous
+2) Code becomes exponentially harder to understand the more code there is - help in managing code in javascript?
+3) Not all APIs are created equal / have pagination
+4) Read all instructions and spend time designing before coding (for example: to sort you need an array of everything)
+5) Stack Overflow is amazing
