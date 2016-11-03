@@ -267,7 +267,7 @@ $(window).scroll(function() {
         loading = true;
         console.log("Loading more...");
         popUp.className = "loader";
-        page=1;
+        page+=1;
         getNPR(searchValue);
         span.innerHTML="All";
         setTimeout(updateFeed,2000); //required because getting data takes < 1 second
