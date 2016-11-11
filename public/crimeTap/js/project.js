@@ -1,6 +1,6 @@
 //Allow location
 
-//can create heatmaps for the last month: https://developers.google.com/maps/documentation/javascript/earthquakes
+//can create heatmaps for the last month:   
 
 // Set up Database
 var ref = new Firebase('https://crimetap.firebaseio.com');
@@ -27,6 +27,7 @@ var longitude; //longitude
 var results = {};
 // var results_all = {};
 var dates = [];
+var maxDate = 0;
 
 // Can think through more categories like driving home
 
@@ -43,7 +44,7 @@ function flow(){
 
 //Charts
 function renderChart(){
-  console.log("render");
+  console.log("Rendering Chart....");
   $(function () { 
     var data_all = [];
     var data_local = [];
@@ -69,10 +70,10 @@ function renderChart(){
         }
       },
       series: [{
-        name: '2 mile radius',
+        name: 'Within 1 mile from your location',
         data: data_local
       }, {
-        name: 'San Francisco avg',
+        name: 'San Francisco average',
         data: data_all
       }]
     });
@@ -103,14 +104,13 @@ function getDate(response){
         local: 0
       }; //generates the date structure
       // console.log(results);
-    } 
+    }
   });
-  console.log("Dates complete");
+  maxDate = dates[dates.length-1] 
+  console.log("Dates complete, max date: "+maxDate);
 }
 
 function returnData(x,y){
-
-
   if (person.checked){
     category_person.forEach(function(category){
       var query = "https://data.sfgov.org/resource/cuks-n6tp.json?$query=select * where date > '2016-01-01T00:00:00.000' and category='"+category+"' order by date desc limit 2000000"
@@ -152,10 +152,14 @@ function appendData(response){
 
     if (distance < 1.61){
       results[date].local = results[date].local +1;
-      // var marker = new google.maps.Marker({
-      //   map: map,
-      //   position: {lat: object.y, lng: object.x}
-      // });
+      if (date==maxDate){
+        // console.log("POINT lat: "+parseFloat(object.y)+ "long: "+parseFloat(object.x)+", you are: "+latitude+", "+longitude);
+        new google.maps.Marker({
+          map: map,
+          position: {lat: parseFloat(object.y), lng: parseFloat(object.x)},
+          title: object.category
+        });
+      }
     } 
   });
   // console.log(results);
@@ -201,9 +205,20 @@ function createGoogleMap(latitude,longitude) {
     };
     map = new google.maps.Map(el, options);
 
+     var goldStar = {
+          path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
+          fillColor: 'yellow',
+          fillOpacity: 0.8,
+          scale: 0.1,
+          strokeColor: 'gold',
+          strokeWeight: 1
+        };
+
     var marker = new google.maps.Marker({
         map: map,
-        position: {lat: latitude, lng: longitude}
+        position: {lat: latitude, lng: longitude},
+        title: "Your location",
+        icon: goldStar
     });
 
 }
