@@ -74,6 +74,7 @@ function getNYTimes(search){
     method: 'GET',
   }).done(function(result) {
     generateArticles(result,type);
+    updateFeed();
   }).fail(function(err) {
     throw err;
   });

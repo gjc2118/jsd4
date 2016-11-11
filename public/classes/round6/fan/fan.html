@@ -1,0 +1,67 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Band Fan Page</title>
+
+  <!-- Bootstrap & Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/fan.css">
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header text-danger">
+      <h1>Band Fan Page</h1>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="panel-group">
+    <div class="panel panel-danger">
+      <div class="panel-heading">Post a message for all fans of the band to see!</div>
+      <div class="panel-body">
+        <form action="" id="message-form">
+          <div class="form-group">
+            <label>Message:</label>
+            <textarea id="message" type="text" class="form-control"></textarea>
+          </div>
+          <button class="btn btn-default">Post to board</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading">Message Board</div>
+      <div class="panel-body">
+        <ul class="message-board">
+
+<li>
+  New post. Yes!!
+  <i class="fa fa-trash pull-right delete"></i>
+  <i class="fa fa-thumbs-up pull-right"></i>
+  <i class="fa fa-thumbs-down pull-right"></i>
+  <div class="pull-right">0</div>
+</li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.5.3/firebase.js"></script>
+<script src="js/fan.js"></script>
+
+</body>
+</html>

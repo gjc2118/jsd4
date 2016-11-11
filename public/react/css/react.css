@@ -1,0 +1,12 @@
+body {
+    background: aqua;
+    color: navy;
+    font-size: 24px;
+    margin: 50px;
+}
+
+.map {
+    width: 600px;
+    height: 400px;
+    margin: auto;
+}
