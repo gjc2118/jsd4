@@ -13,7 +13,7 @@ app.use(express.static(__dirname + '/public'));
 
 // routes
 router.get('/', function(req, res) {
-	res.render('home');
+	res.render('/crimeTap/index.html');
 })
 
 

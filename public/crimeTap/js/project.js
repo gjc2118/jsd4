@@ -1,9 +1,13 @@
 //Allow location
 
-//can create heatmaps for the last month:   
+//can create heatmaps for the last month:  
+// search for address
+// click in market for details
+// color code by category
+// finding a home 
 
 // Set up Database
-var ref = new Firebase('https://crimetap.firebaseio.com');
+// var ref = new Firebase('https://crimetap.firebaseio.com');
 
 // var database = firebase.database();
 
