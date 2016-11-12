@@ -9,11 +9,11 @@ app.set('port', (process.env.PORT || 5000));
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/crimeTap'));
 
 // routes
 router.get('/', function(req, res) {
-	res.render('/crimeTap/index.html');
+	res.render('home');
 })
 
 
