@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var router = express.Router();
 // console.log(router);
-app.use(requireHTTPS);
+
 app.set('port', (process.env.PORT || 5000));
 
 
@@ -23,13 +23,6 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
-function requireHTTPS(req, res, next) {
-    if (!req.secure) {
-        //FYI this should work for local development as well
-        return res.redirect('https://' + req.get('host') + req.url);
-    }
-    next();
-}
 
 
 
