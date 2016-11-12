@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var router = express.Router();
 // console.log(router);
-
+app.use(requireHTTPS);
 app.set('port', (process.env.PORT || 5000));
 
 
@@ -30,9 +30,6 @@ function requireHTTPS(req, res, next) {
     }
     next();
 }
-
-app.use(requireHTTPS);
-app.get('/', routeHandlerHome);
 
 
 
