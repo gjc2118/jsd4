@@ -1,10 +1,6 @@
 // color code by category
 // add footer with information
-
-
-// if (location.protocol != 'https:' && location.protocol != "file:" && location.hostname != "localhost"){
-//  location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-// }
+// show loading when click on map
 
 $(document).ready(openNav());
 
@@ -112,7 +108,6 @@ function getDateQuery(){
   var query = "https://data.sfgov.org/resource/cuks-n6tp.json?$query=select date where date > '2016-01-01T00:00:00.000' order by date asc limit 2000000"
   $.get(query, getDate);
 }
-
 
 function getDate(response){
   response.forEach(function(object){
@@ -280,6 +275,8 @@ function createGoogleMap(lat,long) {
 
     map.addListener('click', function(event) {
       console.log("Map Click!");
+      loader.className = "loader";
+      loader1.className = "loader1";
       mapSearch = true;
       // console.log(event.latLng.lat());
       latitude = event.latLng.lat();
