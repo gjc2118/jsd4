@@ -1,15 +1,14 @@
-//Allow location
-
-//can create heatmaps for the last month:  
 // search for address
+// search again in
 // click in market for details
 // color code by category
 // finding a home 
+// Can think through more categories like driving home
 
-// Set up Database
-// var ref = new Firebase('https://crimetap.firebaseio.com');
 
-// var database = firebase.database();
+if (location.protocol != 'https:' && location.protocol != "file:"){
+ location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+}
 
 var button = document.querySelector("button");
 var answer = document.querySelector("#results");
@@ -17,23 +16,25 @@ var person = document.querySelector("#person");
 var belongings = document.querySelector("#belongings");
 var car = document.querySelector("#car");
 var property = document.querySelector("#property");
-var map;
+var loader = document.querySelector("#loader");
+var loader1 = document.querySelector("#loader1");
+var input = document.querySelector("#autocomplete");
+
 
 button.addEventListener('click',flow)
 
-// button.addEventListener("click", saveChanges);
-document.addEventListener("DOMContentLoaded", getDateQuery);
+$(document).ready(openNav());
 
 // Define values
-
-var latitude; //latitude
-var longitude; //longitude
+var latitude;
+var longitude; 
 var results = {};
-// var results_all = {};
 var dates = [];
 var maxDate = 0;
-
-// Can think through more categories like driving home
+var categories = [];
+var autocomplete;
+var map;
+var mapSearch = false; // if the person is doing a map search
 
 var category_person = ["MISSING PERSON", "ASSAULT", "FAMILY OFFENSES", "SEX OFFENSES, NON FORCIBLE", "KIDNAPPING", "SEX OFFENSES, FORCIBLE"]
 var category_belongings =["LARCENY/THEFT"]
@@ -41,21 +42,35 @@ var category_property =["BAD CHECKS", "EXTORTION", "STOLEN PROPERTY", "VANDALISM
 var category_car = ["VEHICLE THEFT"]
 var category_other = ["FRAUD", "WARRANTS", "RECOVERED VEHICLE", "NON-CRIMINAL", "SUSPICIOUS OCC", "LOITERING", "GAMBLING", "LIQUOR LAWS", "PROSTITUTION", "PORNOGRAPHY/OBSCENE MAT", "EMBEZZLEMENT", "DISORDERLY CONDUCT", "SUICIDE", "DRUG/NARCOTIC", "DRIVING UNDER THE INFLUENCE", "DRUNKENNESS","ARSON",  "WEAPON LAWS", "BRIBERY", "SECONDARY CODES", "RUNAWAY", "OTHER OFFENSES"]
 
+/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "300px";
+    document.getElementById("main").style.marginLeft = "300px";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+}
+
 function flow(){
+  closeNav();
   event.preventDefault();
-  navigator.geolocation.getCurrentPosition(updateLocation);
+  var p = new Promise(getDateQuery);
+  p.then(navigator.geolocation.getCurrentPosition(updateLocation));  
 }
 
 //Charts
 function renderChart(){
-  console.log("Rendering Chart....");
+  // console.log("Rendering Chart....");
   $(function () { 
     var data_all = [];
     var data_local = [];
     for (var key in results) {
       if (results.hasOwnProperty(key)) {
         data_local.push(results[key].local);
-        data_all.push(Math.round(parseInt(results[key].all)*3.14/47));
+        data_all.push(Math.round(parseInt(results[key].all)*3.14/47)); // 47 miles in SF!
       }
     }
     var myChart = Highcharts.chart('container', {
@@ -82,8 +97,9 @@ function renderChart(){
       }]
     });
   });
+  loader.className = "";
+  loader1.className = "";
 }
-var categories = [];
 
 function getCategory(response){
   response.forEach(function(object){
@@ -94,9 +110,12 @@ function getCategory(response){
 }
 
 function getDateQuery(){
+  loader.className = "loader";
+  loader1.className = "loader1";
   var query = "https://data.sfgov.org/resource/cuks-n6tp.json?$query=select date where date > '2016-01-01T00:00:00.000' order by date asc limit 2000000"
   $.get(query, getDate);
 }
+
 
 function getDate(response){
   response.forEach(function(object){
@@ -107,54 +126,65 @@ function getDate(response){
         all: 0,
         local: 0
       }; //generates the date structure
-      // console.log(results);
     }
   });
   maxDate = dates[dates.length-1] 
-  console.log("Dates complete, max date: "+maxDate);
+  // console.log("Dates complete, max date: "+maxDate);
+}
+
+// reset the results
+function reset(){
+  $.each(results, function(i, val){
+    results[i] = {
+        all: 0,
+        local: 0
+      };
+  })
 }
 
 function returnData(x,y){
+  var apiPromises = [];
+  reset();
   if (person.checked){
-    category_person.forEach(function(category){
+    apiPromises = category_person.map(function(category){
       var query = "https://data.sfgov.org/resource/cuks-n6tp.json?$query=select * where date > '2016-01-01T00:00:00.000' and category='"+category+"' order by date desc limit 2000000"
-      $.get(query, appendData);
+      return $.get(query);
     });
   }
   else if (belongings.checked){
-    category_belongings.forEach(function(category){
+    apiPromises = category_belongings.map(function(category){
       var query = "https://data.sfgov.org/resource/cuks-n6tp.json?$query=select * where date > '2016-01-01T00:00:00.000' and category='"+category+"' order by date desc limit 2000000"
-      $.get(query, appendData);
-    });
+      return $.get(query);
+    })
   }
   else if (car.checked){
-    category_car.forEach(function(category){
+    apiPromises = category_car.map(function(category){
       var query = "https://data.sfgov.org/resource/cuks-n6tp.json?$query=select * where date > '2016-01-01T00:00:00.000' and category='"+category+"' order by date desc limit 2000000"
-      $.get(query, appendData);
-    });  
+      return $.get(query);
+    })
   }
   else if (property.checked){
-    category_property.forEach(function(category){
+    apiPromises = category_property.map(function(category){
       var query = "https://data.sfgov.org/resource/cuks-n6tp.json?$query=select * where date > '2016-01-01T00:00:00.000' and category='"+category+"' order by date desc limit 2000000"
-      $.get(query, appendData);
-    });
+      return $.get(query);
+    })
   }
-  return results;
+  Promise.all(category_person.map(function(category){
+      var query = "https://data.sfgov.org/resource/cuks-n6tp.json?$query=select * where date > '2016-01-01T00:00:00.000' and category='"+category+"' order by date desc limit 2000000"
+      return $.get(query);
+    })).then(function(results) {
+      appendData(flatten(results));
+      renderChart();
+    });
 }
-//Will need to divide all by the 1 mile radius... e.g. how many 2 miles radius are there in SF? 
 
 function appendData(response){
   response.forEach(function(object){
-    // console.log(object);
     var date = object.date.substring(0,7);
-    // console.log(object);
-    // console.log(latitude,longitude,object.y,object.x);
     var distance = getDistance(latitude,longitude,object.y,object.x);
-    // console.log(distance);
-    //1 km = 1.60934 miles
     results[date].all = results[date].all +1;
 
-    if (distance < 1.61){
+    if (distance < 1.61){ //1 km = 1.60934 miles
       results[date].local = results[date].local +1;
       if (date==maxDate){
         // console.log("POINT lat: "+parseFloat(object.y)+ "long: "+parseFloat(object.x)+", you are: "+latitude+", "+longitude);
@@ -166,8 +196,6 @@ function appendData(response){
       }
     } 
   });
-  // console.log(results);
-  // console.log(results_all);
 }
 
 function getDistance(lat1,lon1,lat2,lon2) {
@@ -193,36 +221,87 @@ function initMap() {
 }
 
 function updateLocation(position) {
-  console.log(position);
-  latitude = position.coords.latitude;
-  longitude = position.coords.longitude;
+  if (input.innerHTML && !mapSearch){
+    var place = autocomplete.getPlace();
+    latitude = place.geometry.location.lat();
+    longitude = place.geometry.location.lng();
+    console.log('search: '+latitude+";"+longitude);
+  }
+  else if (!mapSearch){
+    latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
+    console.log('location: '+latitude+";"+longitude);
+  }
+  else {
+    mapSearch = false;
+    console.log('map: '+latitude+";"+longitude);
+  }
   returnData(latitude,longitude);
-  setTimeout(renderChart,2000);
   createGoogleMap(latitude,longitude);
 }
 
-function createGoogleMap(latitude,longitude) {
+function createGoogleMap(lat,long) {
     var el = document.querySelector("#google-map");    
     var options = {
-      center: {lat: latitude, lng: longitude},
-      zoom: 16
+      center: {lat: lat, lng: long},
+      zoom: 15
     };
+    
     map = new google.maps.Map(el, options);
 
-     var goldStar = {
-          path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
-          fillColor: 'yellow',
-          fillOpacity: 0.8,
-          scale: 0.1,
-          strokeColor: 'gold',
-          strokeWeight: 1
-        };
+    var goldStar = {
+        path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
+        fillColor: 'yellow',
+        fillOpacity: 0.8,
+        scale: 0.1,
+        strokeColor: 'gold',
+        strokeWeight: 1
+    };
 
     var marker = new google.maps.Marker({
         map: map,
-        position: {lat: latitude, lng: longitude},
+        position: {lat: lat, lng: long},
         title: "Your location",
         icon: goldStar
     });
 
+    map.addListener('click', function(event) {
+      console.log("Map Click!");
+      mapSearch = true;
+      // console.log(event.latLng.lat());
+      latitude = event.latLng.lat();
+      longitude = event.latLng.lng();
+      updateLocation();
+    });
 }
+
+
+
+function flatten(arr) {
+  return arr.reduce(function (flat, toFlatten) {
+    return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+  }, []);
+}
+
+function initAutocomplete() {
+    autocomplete = new google.maps.places.Autocomplete(
+      /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')));
+  }
+
+      // Bias the autocomplete object to the user's geographical location,
+      // as supplied by the browser's 'navigator.geolocation' object.
+      function geolocate() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            autocomplete.setBounds(circle.getBounds());
+          });
+        }
+      }

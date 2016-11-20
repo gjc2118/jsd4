@@ -1,21 +1,41 @@
 var express = require('express');
 var app = express();
 var router = express.Router();
-// console.log(router);
+var twitter = require('twitter');
 
 app.set('port', (process.env.PORT || 5000));
 
+// access new twitter client
+var client = new twitter({
+	consumer_key: 'P03KI9Cld7xSAJzlM6WPuJ4E4',
+  	consumer_secret: 'uovnJ4T9LTf0ihwpE9X19AnSHJ4zRlcPiCgmg0WXmWW3abbdgN',
+  	access_token_key: '279120016-HbTumg3A2v5uD7grOexdjcd5yNAl7aPIGVv3SCsE',
+  	access_token_secret: 'csyP7AWp0wkZ9bnloHmlxTCLAorZIdAeEr5Rgqgb9qPn2'
+});
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
-app.use(express.static(__dirname + '/public/crimeTap'));
+app.use(express.static(__dirname + '/public'));
 
 // routes
 router.get('/', function(req, res) {
-	res.render('home');
-})
+	res.render('home'); //sends data down to respond to the request. in this case it is an ejx file under views (html)
+});
 
+router.get('/contacts', function(req, res) {
+	res.render('contacts');
+});
+
+router.get('/timeline', function(req, res) {
+	var params = {screen_name: 'nodejs'};
+	client.get('statuses/user_timeline', params, function(error, tweets, response) {
+  		if (!error) {
+    		console.log(tweets);
+  		}
+  		res.send(tweets);
+	});
+});
 
 app.use('/', router);
 
