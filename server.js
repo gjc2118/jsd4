@@ -1,5 +1,4 @@
 var express = require('express');
-var path = require('path');
 var app = express();
 var router = express.Router();
 // console.log(router);
@@ -14,7 +13,14 @@ app.use(express.static(__dirname + '/public'));
 
 // routes
 router.get('/', function(req, res) {
-  res.render('crimetap');
+	res.render('crimeTap/index.html');
+  // res.render('/crimeTap/index.html');
+  // res.render('home');
+})
+
+router.get('/crimetap/', function(req, res) {
+  // res.render('crimeTap/index.html');
+  res.render('home');
 })
 
 
