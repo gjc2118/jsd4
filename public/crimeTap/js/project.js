@@ -1,14 +1,12 @@
-// search for address
-// search again in
-// click in market for details
 // color code by category
-// finding a home 
-// Can think through more categories like driving home
+// add footer with information
 
 
-if (location.protocol != 'https:' && location.protocol != "file:" && location.hostname != "localhost"){
- location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-}
+// if (location.protocol != 'https:' && location.protocol != "file:" && location.hostname != "localhost"){
+//  location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+// }
+
+$(document).ready(openNav());
 
 var button = document.querySelector("button");
 var answer = document.querySelector("#results");
@@ -20,10 +18,7 @@ var loader = document.querySelector("#loader");
 var loader1 = document.querySelector("#loader1");
 var input = document.querySelector("#autocomplete");
 
-
 button.addEventListener('click',flow)
-
-$(document).ready(openNav());
 
 // Define values
 var latitude;
@@ -35,12 +30,14 @@ var categories = [];
 var autocomplete;
 var map;
 var mapSearch = false; // if the person is doing a map search
+var infowindow;
 
-var category_person = ["MISSING PERSON", "ASSAULT", "FAMILY OFFENSES", "SEX OFFENSES, NON FORCIBLE", "KIDNAPPING", "SEX OFFENSES, FORCIBLE"]
-var category_belongings =["LARCENY/THEFT"]
-var category_property =["BAD CHECKS", "EXTORTION", "STOLEN PROPERTY", "VANDALISM", "ROBBERY", "TRESPASS", "BURGLARY", "FORGERY/COUNTERFEITING"]
-var category_car = ["VEHICLE THEFT"]
-var category_other = ["FRAUD", "WARRANTS", "RECOVERED VEHICLE", "NON-CRIMINAL", "SUSPICIOUS OCC", "LOITERING", "GAMBLING", "LIQUOR LAWS", "PROSTITUTION", "PORNOGRAPHY/OBSCENE MAT", "EMBEZZLEMENT", "DISORDERLY CONDUCT", "SUICIDE", "DRUG/NARCOTIC", "DRIVING UNDER THE INFLUENCE", "DRUNKENNESS","ARSON",  "WEAPON LAWS", "BRIBERY", "SECONDARY CODES", "RUNAWAY", "OTHER OFFENSES"]
+var category_person = ["MISSING PERSON", "ASSAULT", "FAMILY OFFENSES", "SEX OFFENSES, NON FORCIBLE", "KIDNAPPING", "SEX OFFENSES, FORCIBLE"];
+var category_belongings =["LARCENY/THEFT"];
+var category_property =["BAD CHECKS", "EXTORTION", "STOLEN PROPERTY", "VANDALISM", "ROBBERY", "TRESPASS", "BURGLARY", "FORGERY/COUNTERFEITING"];
+var category_car = ["VEHICLE THEFT"];
+var category_home = ["LOITERING", "PROSTITUTION", "PORNOGRAPHY/OBSCENE MAT", "DRUG/NARCOTIC", "DRUNKENNESS", "LARCENY/THEFT", "VEHICLE THEFT", "STOLEN PROPERTY", "VANDALISM", "ROBBERY", "TRESPASS", "BURGLARY", "MISSING PERSON", "ASSAULT", "FAMILY OFFENSES", "SEX OFFENSES, NON FORCIBLE", "KIDNAPPING", "SEX OFFENSES, FORCIBLE"];
+var category_other = ["FRAUD", "WARRANTS", "RECOVERED VEHICLE", "NON-CRIMINAL", "SUSPICIOUS OCC", "GAMBLING", "LIQUOR LAWS", "EMBEZZLEMENT", "DRIVING UNDER THE INFLUENCE", "DISORDERLY CONDUCT", "SUICIDE", "ARSON",  "WEAPON LAWS", "BRIBERY", "SECONDARY CODES", "RUNAWAY", "OTHER OFFENSES"];
 
 /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
 function openNav() {
@@ -146,30 +143,31 @@ function returnData(x,y){
   var apiPromises = [];
   reset();
   if (person.checked){
-    apiPromises = category_person.map(function(category){
-      var query = "https://data.sfgov.org/resource/cuks-n6tp.json?$query=select * where date > '2016-01-01T00:00:00.000' and category='"+category+"' order by date desc limit 2000000"
-      return $.get(query);
+    category_person.forEach(function(category){
+      apiPromises.push(category);
     });
   }
   else if (belongings.checked){
-    apiPromises = category_belongings.map(function(category){
-      var query = "https://data.sfgov.org/resource/cuks-n6tp.json?$query=select * where date > '2016-01-01T00:00:00.000' and category='"+category+"' order by date desc limit 2000000"
-      return $.get(query);
-    })
+    category_belongings.forEach(function(category){
+      apiPromises.push(category);
+    });
+  }
+  else if (home.checked){
+    category_home.forEach(function(category){
+      apiPromises.push(category);
+    });
   }
   else if (car.checked){
-    apiPromises = category_car.map(function(category){
-      var query = "https://data.sfgov.org/resource/cuks-n6tp.json?$query=select * where date > '2016-01-01T00:00:00.000' and category='"+category+"' order by date desc limit 2000000"
-      return $.get(query);
-    })
+    category_car.forEach(function(category){
+      apiPromises.push(category);
+    });
   }
   else if (property.checked){
-    apiPromises = category_property.map(function(category){
-      var query = "https://data.sfgov.org/resource/cuks-n6tp.json?$query=select * where date > '2016-01-01T00:00:00.000' and category='"+category+"' order by date desc limit 2000000"
-      return $.get(query);
-    })
+    category_property.forEach(function(category){
+      apiPromises.push(category);
+    });
   }
-  Promise.all(category_person.map(function(category){
+  Promise.all(apiPromises.map(function(category){
       var query = "https://data.sfgov.org/resource/cuks-n6tp.json?$query=select * where date > '2016-01-01T00:00:00.000' and category='"+category+"' order by date desc limit 2000000"
       return $.get(query);
     })).then(function(results) {
@@ -180,6 +178,7 @@ function returnData(x,y){
 
 function appendData(response){
   response.forEach(function(object){
+    
     var date = object.date.substring(0,7);
     var distance = getDistance(latitude,longitude,object.y,object.x);
     results[date].all = results[date].all +1;
@@ -187,11 +186,25 @@ function appendData(response){
     if (distance < 1.61){ //1 km = 1.60934 miles
       results[date].local = results[date].local +1;
       if (date==maxDate){
-        // console.log("POINT lat: "+parseFloat(object.y)+ "long: "+parseFloat(object.x)+", you are: "+latitude+", "+longitude);
-        new google.maps.Marker({
+        var mydate_temp = new Date(object.date);
+        var mydate = mydate_temp.toString("yyyy-MM-dd");
+        mydate+= " "+object.time;
+        infowindow = new google.maps.InfoWindow();
+        infowindow.close();
+
+        var marker = new google.maps.Marker({
           map: map,
           position: {lat: parseFloat(object.y), lng: parseFloat(object.x)},
           title: object.category
+        });
+        marker.addListener('click', function() {
+          infowindow.setContent('<div><strong>' + object.category + '</strong><br>' +
+                'Description: ' + object.descript + '<br>' +
+                'Date: ' + mydate + '<br>' +
+                'Address: ' + object.address + '<br>' +
+                'Resolution: ' + object.resolution + '</div>');
+              infowindow.open(map, this);
+        
         });
       }
     } 
@@ -225,16 +238,16 @@ function updateLocation(position) {
     var place = autocomplete.getPlace();
     latitude = place.geometry.location.lat();
     longitude = place.geometry.location.lng();
-    console.log('search: '+latitude+";"+longitude);
+    // console.log('search: '+latitude+";"+longitude);
   }
   else if (!mapSearch){
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
-    console.log('location: '+latitude+";"+longitude);
+    // console.log('location: '+latitude+";"+longitude);
   }
   else {
     mapSearch = false;
-    console.log('map: '+latitude+";"+longitude);
+    // console.log('map: '+latitude+";"+longitude);
   }
   returnData(latitude,longitude);
   createGoogleMap(latitude,longitude);
@@ -275,8 +288,6 @@ function createGoogleMap(lat,long) {
     });
 }
 
-
-
 function flatten(arr) {
   return arr.reduce(function (flat, toFlatten) {
     return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
@@ -286,22 +297,22 @@ function flatten(arr) {
 function initAutocomplete() {
     autocomplete = new google.maps.places.Autocomplete(
       /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')));
-  }
+}
 
-      // Bias the autocomplete object to the user's geographical location,
-      // as supplied by the browser's 'navigator.geolocation' object.
-      function geolocate() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var geolocation = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            var circle = new google.maps.Circle({
-              center: geolocation,
-              radius: position.coords.accuracy
-            });
-            autocomplete.setBounds(circle.getBounds());
-          });
-        }
-      }
+// Bias the autocomplete object to the user's geographical location,
+// as supplied by the browser's 'navigator.geolocation' object.
+function geolocate() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var geolocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      var circle = new google.maps.Circle({
+        center: geolocation,
+        radius: position.coords.accuracy
+      });
+      autocomplete.setBounds(circle.getBounds());
+    });
+  }
+}

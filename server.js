@@ -3,6 +3,11 @@ var app = express();
 var router = express.Router();
 // console.log(router);
 
+var secure = require('express-force-https');
+
+app.use(secure);
+
+
 app.set('port', (process.env.PORT || 5000));
 
 
