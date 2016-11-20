@@ -13,9 +13,9 @@ app.use(express.static(__dirname + '/public'));
 
 // routes
 router.get('/', function(req, res) {
-	res.render('crimeTap/index.html');
+	// res.render('crimeTap/index.html');
   // res.render('/crimeTap/index.html');
-  // res.render('home');
+  res.render('crimetap');
 })
 
 router.get('/crimetap/', function(req, res) {
