@@ -6,7 +6,7 @@
 // Can think through more categories like driving home
 
 
-if (location.protocol != 'https:' && location.protocol != "file:"){
+if (location.protocol != 'https:' && location.protocol != "file:" && location.hostname != "localhost"){
  location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 }
 
