@@ -229,7 +229,7 @@ function initMap() {
 }
 
 function updateLocation(position) {
-  if (input.innerHTML && !mapSearch){
+  if (input.value && !mapSearch){
     var place = autocomplete.getPlace();
     latitude = place.geometry.location.lat();
     longitude = place.geometry.location.lng();

@@ -3,8 +3,8 @@ var app = express();
 var router = express.Router();
 // console.log(router);
 
-var secure = require('express-force-https');
-
+var secure = require('express-force-https'); 
+var app = express();
 app.use(secure);
 
 
@@ -80,9 +80,6 @@ app.listen(app.get('port'), function() {
 // app.listen(app.get('port'), function() {
 //   console.log('Node app is running on port', app.get('port'));
 // });
-
-
-
 
 // var http = require('http');
 // http.createServer(function (req, res) {
