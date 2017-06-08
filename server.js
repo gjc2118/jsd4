@@ -4,7 +4,17 @@ var router = express.Router();
 // console.log(router);
 
 var secure = require('express-force-https'); 
+var api = require('sendwithus')('live_2bc07b48e1dce873100b099a086a2f4f737494ea');
+var callback = function(err, response) {
+    if (err) {
+        console.log(err.statusCode, response);
+    } else {
+        console.log(response);
+    }
+};
+
 var app = express();
+
 app.use(secure);
 
 
@@ -18,14 +28,19 @@ app.use(express.static(__dirname + '/public'));
 
 // routes
 router.get('/', function(req, res) {
-	// res.render('crimeTap/index.html');
-  // res.render('/crimeTap/index.html');
-  res.render('crimetap');
+  res.render('luhack');
 })
 
-router.get('/crimetap/', function(req, res) {
-  // res.render('crimeTap/index.html');
+router.get('/luhack/', function(req, res) {
   res.render('home');
+})
+
+router.get('/sendemail/', function(req, res) {
+	res.send('OH YEA')
+	api.send({
+    template: 'tem_YC8VxS3Kd7pqRMK9kBXpDKVG',
+    recipient: { address: 'geoffrey.charles@lendup.com'}
+}, callback);
 })
 
 
