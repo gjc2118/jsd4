@@ -9,8 +9,10 @@ var CIO = require('customerio-node');
 var cio = new CIO('4f91f70835d4a66dba89', '1e8cb9321877111f4ccc');
 
 var amount;
+var first_name;
 var cra;
 var id = 0;
+var data;
 
 var callback = function(err, response) {
     if (err) {
@@ -44,19 +46,35 @@ router.get('/luhack/', function(req, res) {
 })
 
 //SendWithUs
-router.get('/signup/', function(req, res) {
-  res.send('Confirmed')
-  api.send({
-    template: 'tem_YC8VxS3Kd7pqRMK9kBXpDKVG',
-    recipient: { address: 'geoffrey.charles@lendup.com'}
+router.get('/sendemail/', function(req, res) {
+	res.send('Welcome '+req.query.first_name +" !")
+	api.send({
+    template: 'tem_vkrJyvyXG77x8kKWT7tDjDWS',
+    recipient: { 
+      name: req.query.first_name,
+      address: 'geoffrey.charles@lendup.com',
+    },
+    email_data:{
+      amount: req.query.amount,
+      first_name: req.query.first_name
+    }
 }, callback);
 })
 
-router.get('/sendemail/', function(req, res) {
-	res.send('OH YEA')
-	api.send({
-    template: 'tem_YC8VxS3Kd7pqRMK9kBXpDKVG',
-    recipient: { address: 'geoffrey.charles@lendup.com'}
+router.get('/sendemail/dq', function(req, res) {
+  res.send('You are delinquent!');
+  data = { recipient_address: 'geoffrey.charles@lendup.com' };
+  api.dripCampaignDeactivate('dc_GFgMtPgfyfHHDXbrfwqhK6GF', data, callback);
+  api.dripCampaignActivate('dc_GFgMtPgfyfHHDXbrfwqhK6GF', data, callback);
+  api.send({
+    template: 'tem_yRxTbXVqBJHvjH3H6fbPpmvH',
+   recipient: { 
+      name: first_name,
+      address: 'geoffrey.charles@lendup.com',
+    },
+    email_data:{
+      amount: amount
+    }
 }, callback);
 })
 
@@ -72,6 +90,7 @@ router.get('/sendevent/', function(req, res) {
   });
   amount = req.query.amount;
   cra = req.query.cra;
+  first_name = req.query.first_name;
 })
 
 router.get('/sendevent/due', function(req, res) {

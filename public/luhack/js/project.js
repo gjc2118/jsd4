@@ -10,36 +10,14 @@ var paid1 = document.querySelector("#paid1");
 var paid2 = document.querySelector("#paid2");
 var noaction1 = document.querySelector("#noaction1");
 var payfail1 = document.querySelector("#payfail1");
+var dq = document.querySelector("#dq");
 
 var fn = document.querySelector("#fn");
 var ln = document.querySelector("#ln");
 var amount = document.querySelector("#amount");
 var cra = document.querySelector("#cra");
 
-$('#button1').click(function(e){
-    e.preventDefault();
-    $.get(
-	    "/sendemail/",
-	    {paramOne : 1, paramX : 'abc'},
-	    function(data) {
-	       alert('page content: ' + data);
-	    }
-	);
-});
-
-$('#button2').click(function(e){
-    e.preventDefault();    
-    var response = getAction();
-    $.get(
-      "/sendevent"+response,
-      {paramOne : 1, paramX : 'abc'},
-      function(data) {
-        if (response == '/due' ||  response == '/paid') {swal("Nice!", data, "success")}
-        if (response == '/noaction' ||  response == '/fail') {swal("Oops!", data, "error")}
-      }
-  );
-});
-
+//Sends request to both SWU and CUIO
 $('#sign').click(function(e){
     e.preventDefault();
     $.get(
@@ -49,6 +27,39 @@ $('#sign').click(function(e){
          swal("You have been approved!", data, "success")
       }
     );
+    $.get(
+      "/sendemail/",
+      {first_name : fn.value, last_name : ln.value, amount : amount.value, cra : cra.value},
+  );
+});
+
+//SWU
+$('#button1').click(function(e){
+  console.log(getAction());
+    e.preventDefault();
+    var response = getAction();
+    $.get(
+	    "/sendemail"+response,
+	    {paramOne : 1, paramX : 'abc'},
+	    function(data) {
+        if(response =='none') {swal("Nice!", data, "success")}
+        if(response =='/dq') {swal("Oh no!", data, "error")}
+	    }
+	);
+});
+
+//Customer.io
+$('#button2').click(function(e){
+    e.preventDefault();    
+    var response = getAction();
+    $.get(
+      "/sendevent"+response,
+      {paramOne : 1, paramX : 'abc'},
+      function(data) {
+        if (response == '/due' ||  response == '/paid') {{swal("Nice!", data, "success")}}
+        if (response == '/noaction' ||  response == '/fail') {swal("Oops!", data, "error")}
+      }
+  );
 });
 
 function getAction(){
@@ -61,6 +72,9 @@ function getAction(){
   }
   else if (paid1.checked || paid2.checked){
     return '/paid';
+  }
+    else if (dq.checked){
+    return '/dq';
   }
   else if (noaction1.checked){
     return '/noaction';

@@ -31,7 +31,7 @@
   </div>
 
   <div id="main">
-    <header style="cursor:pointer" onclick="openNav()">LEMEMAIL - LendUp's New Email Tool</header>
+    <header style="cursor:pointer" onclick="openNav()">LEmail</header>
     <fieldset>
       <section class="col col-5">    
       <label class="h3"><strong> SendWithUs</strong> </label>
@@ -41,6 +41,12 @@
     <a><label class="toggle"><input type="radio" name="radio-toggle1" id="due1"/><i></i>Payment is due</label></a>
     <a><label class="toggle"><input type="radio" name="radio-toggle1" id="paid1"/><i></i>Loan paid off on time</label></a>
     <label class="h1">Drip Emails</label>
+        <a><label class="toggle"><input type="radio" name="radio-toggle1" id=""/><i></i>No activity for 3 months</label></a>
+    <a><label class="toggle"><input type="radio" name="radio-toggle1" id=""/><i></i>Started application but did not finish</label></a>
+    <a><label class="toggle"><input type="radio" name="radio-toggle1" id="dq"/><i></i>Delinquent for 7 days</label></a>
+        <label class="h1">Email Blasts</label>
+    <a><label class="toggle"><input type="radio" name="radio-toggle1" id=""/><i></i>Tried to make a payment but failed</label></a>
+    <a><label class="toggle"><input type="radio" name="radio-toggle1" id=""/><i></i>Annual Privacy Notice</label></a>
     <br>
     <a><button class="button" id="button1">Action</button></a>
       
@@ -59,15 +65,18 @@
 
 
     <label class="h1">Drip Emails</label>
-    <a><label class="toggle"><input type="radio" name="radio-toggle1" id="noaction1"/><i></i>3 months with no activity</label></a>
+    <a><label class="toggle"><input type="radio" name="radio-toggle1" id="noaction1"/><i></i>No activity for 3 months</label></a>
+    <a><label class="toggle"><input type="radio" name="radio-toggle1" id=""/><i></i>Started application but did not finish</label></a>
+    <a><label class="toggle"><input type="radio" name="radio-toggle1" id=""/><i></i>Delinquent for 7 days</label></a>
     <label class="h1">Email Blasts</label>
     <a><label class="toggle"><input type="radio" name="radio-toggle1" id="payfail1"/><i></i>Tried to make a payment but failed</label></a>
+    <a><label class="toggle"><input type="radio" name="radio-toggle1" id=""/><i></i>Annual Privacy Notice</label></a>
     <br>
     <a><button class="button" id="button2">Action</button></a>
       
       </section>
       </fieldset>
-  <footer>Make emails great again</footer>
+  <footer>LendUp Let Me Email</footer>
   </div>
   
 </form>
