@@ -5,6 +5,13 @@ var router = express.Router();
 
 var secure = require('express-force-https'); 
 var api = require('sendwithus')('live_2bc07b48e1dce873100b099a086a2f4f737494ea');
+var CIO = require('customerio-node');
+var cio = new CIO('4f91f70835d4a66dba89', '1e8cb9321877111f4ccc');
+
+var amount;
+var cra;
+var id = 0;
+
 var callback = function(err, response) {
     if (err) {
         console.log(err.statusCode, response);
@@ -26,6 +33,7 @@ app.set('views', __dirname + '/views');
 
 app.use(express.static(__dirname + '/public'));
 
+
 // routes
 router.get('/', function(req, res) {
   res.render('luhack');
@@ -33,6 +41,15 @@ router.get('/', function(req, res) {
 
 router.get('/luhack/', function(req, res) {
   res.render('home');
+})
+
+//SendWithUs
+router.get('/signup/', function(req, res) {
+  res.send('Confirmed')
+  api.send({
+    template: 'tem_YC8VxS3Kd7pqRMK9kBXpDKVG',
+    recipient: { address: 'geoffrey.charles@lendup.com'}
+}, callback);
 })
 
 router.get('/sendemail/', function(req, res) {
@@ -43,6 +60,45 @@ router.get('/sendemail/', function(req, res) {
 }, callback);
 })
 
+//Customer.io
+router.get('/sendevent/', function(req, res) {
+  res.send('Welcome '+req.query.first_name +" !")
+  id = id+1;
+  cio.identify(id, {
+  first_name: req.query.first_name,
+  last_name: req.query.last_name,
+  email: 'geoffrey.charles@lendup.com',
+  created_at: Math.round((new Date()).getTime() / 1000),
+  });
+  amount = req.query.amount;
+  cra = req.query.cra;
+})
+
+router.get('/sendevent/due', function(req, res) {
+  res.send('A Payment is due!')
+  cio.track(id, { 
+    name: 'payment due' ,
+    data: {
+      amount: amount,
+      credit_reporting: cra
+    }
+  });
+})
+
+router.get('/sendevent/paid', function(req, res) {
+  res.send('You paid off your loan!')
+  cio.track(id, { name: 'Paid off' });
+})
+
+router.get('/sendevent/noaction', function(req, res) {
+  res.send('You have been inactive for 3 months')
+  cio.track(id, { name: 'activate_time' });
+})
+
+router.get('/sendevent/fail', function(req, res) {
+  res.send('We screwed up payments!')
+  cio.track(id, { name: 'fail payment' });
+})
 
 app.use('/', router);
 
